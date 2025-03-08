@@ -15,16 +15,38 @@ import {
   Download,
 } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default function Page() {
   const t = useTranslations("HomePage");
 
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
-  const [outPreview, setOutPreview] = useState(null);
+  const [outPreview, setOutPreview] = useState();
+  const router = useRouter();
+  const pathname = usePathname();
+  const [selectedLang, setSelectedLang] = useState("🇺🇸 English");
+
+  useEffect(() => {
+    const langcode = pathname.split("/")[1];
+    languages.forEach((lang) => {
+      if (lang.code == langcode) {
+        setSelectedLang(lang.label);
+      }
+    });
+  }, [pathname]);
 
   const handleUploadClick = () => {
     document.getElementById("fileInput").click();
@@ -79,6 +101,20 @@ export default function Page() {
     }
   };
 
+  const languages = [
+    { code: "en", label: "🇺🇸 English" },
+    { code: "hi", label: "🇮🇳 हिन्दी" },
+    { code: "zh", label: "🇨🇳 中文" },
+    { code: "fr", label: "🇫🇷 Français" },
+    { code: "es", label: "🇪🇸 Español" },
+    { code: "de", label: "🇩🇪 Deutsch" },
+  ];
+
+  const changeLanguage = (lang) => {
+    setSelectedLang(lang.label);
+    router.push(`/${lang.code}`);
+  };
+
   return (
     <div className="flex min-h-screen flex-col">
       <header className="px-4 lg:px-6 h-16 flex items-center">
@@ -87,20 +123,33 @@ export default function Page() {
           <span className="ml-2 text-lg font-bold">Cartoonizer</span>
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-6">
+          <DropdownMenu>
+            <DropdownMenuTrigger>{selectedLang}</DropdownMenuTrigger>
+            <DropdownMenuContent>
+              {languages.map((lang) => (
+                <DropdownMenuItem
+                  key={lang.code}
+                  onClick={() => changeLanguage(lang)}
+                >
+                  {lang.label}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
           <Link
-            className="text-sm font-medium hover:underline underline-offset-4"
+            className="text-sm font-medium hover:underline underline-offset-4 items-center flex"
             href="#demo"
           >
             {t("tryDemo")}
           </Link>
           <Link
-            className="text-sm font-medium hover:underline underline-offset-4"
+            className="text-sm font-medium hover:underline underline-offset-4 items-center flex"
             href="#features"
           >
             {t("features")}
           </Link>
           <Link
-            className="text-sm font-medium hover:underline underline-offset-4"
+            className="text-sm font-medium hover:underline underline-offset-4 items-center flex"
             href="#examples"
           >
             {t("examples")}
