@@ -24,8 +24,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
@@ -136,24 +134,6 @@ export default function Page() {
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
-          <Link
-            className="text-sm font-medium hover:underline underline-offset-4 items-center flex"
-            href="#demo"
-          >
-            {t("tryDemo")}
-          </Link>
-          <Link
-            className="text-sm font-medium hover:underline underline-offset-4 items-center flex"
-            href="#features"
-          >
-            {t("features")}
-          </Link>
-          <Link
-            className="text-sm font-medium hover:underline underline-offset-4 items-center flex"
-            href="#examples"
-          >
-            {t("examples")}
-          </Link>
         </nav>
       </header>
       <main className="flex-1">
