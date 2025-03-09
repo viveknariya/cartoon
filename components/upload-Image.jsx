@@ -36,7 +36,7 @@ export default function UploadImage() {
       try {
         const response = await fetch(
           // "https://pvj9mb5v91.execute-api.ap-south-1.amazonaws.com/dev/trasform",
-          "http://0.0.0.0:8000/cartoonize",
+          "http://3.108.219.10:8000/cartoonize",
           {
             method: "POST",
             body: JSON.stringify({ image: base64Image }),
