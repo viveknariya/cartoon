@@ -3,6 +3,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { routing } from "@/i18n/routing";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
+import Script from "next/script";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -83,10 +84,11 @@ export default async function RootLayout({ children, params }) {
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
-        window.dataLayer = window.dataLayer || [] function gtag()
-        {dataLayer.push(arguments)}
-        gtag('js', new Date()); gtag('config', 'G-FGBG1FN3WP');
-        `,
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date()); 
+                    gtag('config', 'G-FGBG1FN3WP');
+                    `,
           }}
         />
       </body>
